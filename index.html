@@ -114,11 +114,6 @@
               JSON.stringify({ afterPaymentComplete: response })
             );
           },
-          onPaymentCancel: () => {
-             window.ReactNativeWebView.postMessage(
-              JSON.stringify({ onPaymentCancel: {} })
-            );
-          },
           clientSecret: secretKey,
           paymentMethods: ['card'],
           elementId: 'paymob',
