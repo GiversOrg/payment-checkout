@@ -114,7 +114,12 @@
               JSON.stringify({ afterPaymentComplete: response })
             );
           },
-          clientSecret: secretKey || 'egy_csk_test_11d569a458297c7f783a2d92a886dab5',
+          onPaymentCancel: () => {
+             window.ReactNativeWebView.postMessage(
+              JSON.stringify({ onPaymentCancel: {} })
+            );
+          },
+          clientSecret: secretKey,
           paymentMethods: ['card'],
           elementId: 'paymob',
           disablePay: true,
