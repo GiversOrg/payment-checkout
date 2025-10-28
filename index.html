@@ -114,6 +114,15 @@
               JSON.stringify({ afterPaymentComplete: response })
             );
           },
+          cardValidationChanged: (isValid) => {
+            // Select the button
+            const payButton = document.getElementById('payFromOutsideButton');
+            
+            // Disable or enable it based on the flag
+            if (payButton) {
+              payButton.disabled = !isValid;
+            }
+          },
           clientSecret: secretKey,
           paymentMethods: ['card'],
           elementId: 'paymob',
@@ -191,7 +200,7 @@
           // Add button loading here
           const event = new Event('payFromOutside');
           window.dispatchEvent(event);
-          payText.innerText = 'Loading...';
+          payText.innerText = language === 'ar' ? 'جاري التحميل' : 'Loading...';
         });
 
         // Hide Paymob logo when it becomes available
