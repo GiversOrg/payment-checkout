@@ -90,18 +90,23 @@
     </div>
     <script>
       window.onload = function () {
-        const button = document.getElementById('payFromOutsideButton');
+        const payButton = document.getElementById('payFromOutsideButton');
         const payText = document.getElementById('payText');
         const paymentFlowType = window.paymentFlowType;
         const language = window.language || 'en';
-        const publicKey = window.publicKey || 'egy_pk_test_ypEN3zdh4HnJSJ7z0hGo8zSQ1mDRFWyX';
-        const secretKey = window.token || 'egy_csk_test_08d3fb4cb64b0fbb165826c0e7707247';
+        const publicKey = window.publicKey;
+        const secretKey = window.token;
 
         if (paymentFlowType === 'SaveCard') {
           payText.innerText = language === 'en' ? 'Save card' : 'حفظ';
         } else {
           payText.innerText = language === 'en' ? 'Pay': 'دفع';
         }
+
+        // Initially disable the pay button
+        payButton.disabled = true;
+        payButton.style.opacity = '0.6';
+        payButton.style.cursor = 'not-allowed';
 
         new Pixel({
           publicKey,
@@ -115,13 +120,10 @@
             );
           },
           cardValidationChanged: (isValid) => {
-            console.log('card validation changed', isValid);
-            // Select the button
-            const payButton = document.getElementById('payFromOutsideButton');
-            
-            // Disable or enable it based on the flag
             if (payButton) {
               payButton.disabled = !isValid;
+              payButton.style.opacity = isValid ? '1' : '0.6';
+              payButton.style.cursor = isValid ? 'pointer' : 'not-allowed';
             }
           },
           clientSecret: secretKey,
@@ -196,7 +198,7 @@
             Vertical_Padding: '40',
           },
         });
-        button?.addEventListener('click', function () {
+        payButton?.addEventListener('click', function () {
           // Calling pay request
           // Add button loading here
           const event = new Event('payFromOutside');
@@ -212,7 +214,6 @@
         
           // Wait for shadow root
           if (host && host.shadowRoot) {
-        
             const images = host.shadowRoot.querySelectorAll("img[class*='copyrights_logo']");
         
             if (images.length > 0) {
@@ -226,7 +227,7 @@
             clearInterval(interval); // Stop checking
           }
     
-        }, 250); // Check every 250ms
+        }, 100); // Check every 100ms
       };
     </script>
   </body>
