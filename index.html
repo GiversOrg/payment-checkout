@@ -94,8 +94,8 @@
         const payText = document.getElementById('payText');
         const paymentFlowType = window.paymentFlowType;
         const language = window.language || 'en';
-        const publicKey = window.publicKey;
-        const secretKey = window.token;
+        const publicKey = window.publicKey || 'egy_pk_test_ypEN3zdh4HnJSJ7z0hGo8zSQ1mDRFWyX';
+        const secretKey = window.token || 'egy_csk_test_08d3fb4cb64b0fbb165826c0e7707247';
 
         if (paymentFlowType === 'SaveCard') {
           payText.innerText = language === 'en' ? 'Save card' : 'حفظ';
@@ -115,6 +115,7 @@
             );
           },
           cardValidationChanged: (isValid) => {
+            console.log('card validation changed', isValid);
             // Select the button
             const payButton = document.getElementById('payFromOutsideButton');
             
