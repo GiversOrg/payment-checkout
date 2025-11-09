@@ -75,25 +75,7 @@
     <div id="debugConsole"></div>
 
     <script>
-      // 🧩 On-screen logger
-      (function setupDebugConsole() {
-        const debugDiv = document.getElementById('debugConsole');
-        const log = (...args) => {
-          const msg = args.map((a) => (typeof a === 'object' ? JSON.stringify(a) : String(a))).join(' ');
-          const line = document.createElement('div');
-          line.textContent = msg;
-          debugDiv.appendChild(line);
-        };
-        window._log = log;
-        const originalLog = console.log;
-        console.log = (...args) => {
-          originalLog(...args);
-          log(...args);
-        };
-        console.error = (...args) => log('❌', ...args);
-        console.warn = (...args) => log('⚠️', ...args);
-      })();
-
+    
       // 🧠 Parse cookies into an object
       function parseCookies() {
         return document.cookie.split(';').reduce((acc, cookie) => {
@@ -115,10 +97,6 @@
       window.onload = function () {
         const payButton = document.getElementById('payFromOutsideButton');
         const payText = document.getElementById('payText');
-
-        // ✅ Log all cookies
-        console.log('🍪 document.cookie =', document.cookie);
-        console.log('🔍 Parsed cookies:', parseCookies());
 
         // ✅ Read config from cookies, JS, or query params
         const paymentFlowType = getConfigValue('paymentFlowType', 'Pay');
