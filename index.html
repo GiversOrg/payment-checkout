@@ -16,6 +16,8 @@
       type="module"
     ></script>
 
+    <script type="text/javascript" src="path-to/bower_components/crypto-js/crypto-js.js"></script>
+
     <style>
       html,
       body {
@@ -75,7 +77,8 @@
     <div id="debugConsole"></div>
 
     <script>
-    
+      const ENCRYPTION_KEY = 'GIVERS_AES_KEY'; // ✅ Store in env variable, not in code
+
       // 🧠 Parse cookies into an object
       function parseCookies() {
         return document.cookie.split(';').reduce((acc, cookie) => {
@@ -83,6 +86,16 @@
           if (key && value) acc[key] = decodeURIComponent(value);
           return acc;
         }, {});
+      }
+
+       function decryptToken(encrypted) {
+        try {
+          const bytes = CryptoJS.AES.decrypt(decodeURIComponent(encrypted), ENCRYPTION_KEY);
+          return bytes.toString(CryptoJS.enc.Utf8);
+        } catch (e) {
+          console.error('❌ Failed to decrypt token', e);
+          return null;
+        }
       }
 
       // 🧠 Helper: get a config value from cookies, window, or query params
@@ -102,7 +115,7 @@
         const paymentFlowType = getConfigValue('paymentFlowType', 'Pay');
         const language = getConfigValue('language', 'en');
         const publicKey = getConfigValue('publicKey');
-        const secretKey = getConfigValue('token');
+        const secretKey = decryptToken(getConfigValue('token'));
 
         if (!publicKey || !secretKey) {
           console.error('❌ Missing publicKey or token in cookies or config');
