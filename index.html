@@ -121,9 +121,7 @@
         }
 
         if (!publicKey || !secretKey) {
-          console.error('❌ Missing publicKey or token in cookies or config');
-        } else {
-          console.log('✅ Found keys:', { publicKey, token: secretKey });
+          return;
         }
 
         if (paymentFlowType === 'SaveCard') {
