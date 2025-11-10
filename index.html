@@ -86,13 +86,16 @@
         }, {});
       }
 
+      console.log('CryptoJS', CryptoJS.AES);
+
       // On the web:
       function decryptToken(encrypted) {
+        console.log('value to decrypt', encrypted);
         try {
           const bytes = CryptoJS.AES.decrypt(encrypted, ENCRYPTION_KEY);
           return bytes.toString(CryptoJS.enc.Utf8);
         } catch (e) {
-          alert('❌ Failed to decrypt token', JSON.stringify(e));
+          console.log('❌ Failed to decrypt token', JSON.stringify(e));
           return null;
         }
       }
