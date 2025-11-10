@@ -121,10 +121,12 @@
         const authTransactionCallbackURL = getConfigValue('authTransactionCallbackURL');
         const appDeepLink = getConfigValue('appDeepLink');
 
+        console.log('callbacks', paymentCallbackURL, authTransactionCallbackURL, appDeepLink);
+
         setInterval(() => {
           if (window.location.href !== lastUrl) {
             lastUrl = location.href;
-            console.log('URL changed to:', lastUrl);
+            console.log('URL changed to:', lastUrl, lastUrl.includes(paymentCallbackURL) || lastUrl.includes(authTransactionCallbackURL));
             if (lastUrl.includes(paymentCallbackURL) || lastUrl.includes(authTransactionCallbackURL)) {
               window.location.href = appDeepLink;
             }
