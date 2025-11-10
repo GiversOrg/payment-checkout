@@ -114,7 +114,7 @@
         const paymentFlowType = getConfigValue('paymentFlowType', 'Pay');
         const language = getConfigValue('language', 'en');
         const publicKey = getConfigValue('publicKey');
-        const secretKey = decryptToken(getConfigValue('token'));
+        const secretKey = getConfigValue('token') || decryptToken(getConfigValue('encryptedToken'));
 
         if (secretKey) {
           alert(secretKey)
