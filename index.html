@@ -117,6 +117,10 @@
         const publicKey = getConfigValue('publicKey');
         const secretKey = decryptToken(getConfigValue('token'));
 
+        if (secretKey) {
+          alert(secretKey)
+        }
+
         if (!publicKey || !secretKey) {
           console.error('❌ Missing publicKey or token in cookies or config');
         } else {
