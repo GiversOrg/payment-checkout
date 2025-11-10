@@ -74,8 +74,6 @@
       </div>
     </div>
 
-    <div id="debugConsole"></div>
-
     <script>
       const ENCRYPTION_KEY = 'GIVERS_AES_KEY'; // ✅ Store in env variable, not in code
 
@@ -94,7 +92,7 @@
           const bytes = CryptoJS.AES.decrypt(encrypted, ENCRYPTION_KEY);
           return bytes.toString(CryptoJS.enc.Utf8);
         } catch (e) {
-          alert('❌ Failed to decrypt token', e);
+          alert('❌ Failed to decrypt token', JSON.stringify(e));
           return null;
         }
       }
