@@ -118,11 +118,7 @@
         const language = getConfigValue('language', 'en');
         const publicKey = getConfigValue('publicKey');
         const secretKey = getConfigValue('token') || decryptToken(getConfigValue('encryptedToken'));
-
-        if (secretKey) {
-          alert(secretKey)
-        }
-
+        
         if (!publicKey || !secretKey) {
           return;
         }
