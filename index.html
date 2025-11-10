@@ -118,6 +118,15 @@
         const language = getConfigValue('language', 'en');
         const publicKey = getConfigValue('publicKey');
         const secretKey = getConfigValue('token') || decryptToken(getConfigValue('encryptedToken'));
+        const paymentCallbackURL = getConfigValue('paymentCallbackURL');
+        const authTransactionCallbackURL = getConfigValue('authTransactionCallbackURL');
+        const appDeepLink = getConfigValue('appDeepLink');
+
+        window.addEventListener('popstate', function(event) {
+          console.log('URL changed due to history navigation:', window.location.href);
+          console.log('State data:', event.state); 
+          console.log('callbacks', paymentCallbackURL, authTransactionCallbackURL, appDeepLink);
+        });
         
         if (!publicKey || !secretKey) {
           return;
