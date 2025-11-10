@@ -86,8 +86,6 @@
         }, {});
       }
 
-      console.log('CryptoJS', CryptoJS.AES);
-
       // On the web:
       function decryptToken(encrypted) {
         console.log('value to decrypt', encrypted);
@@ -110,6 +108,7 @@
       }
 
       window.onload = function () {
+        let lastUrl = window.location.href;
         const payButton = document.getElementById('payFromOutsideButton');
         const payText = document.getElementById('payText');
 
@@ -122,11 +121,15 @@
         const authTransactionCallbackURL = getConfigValue('authTransactionCallbackURL');
         const appDeepLink = getConfigValue('appDeepLink');
 
-        window.addEventListener('popstate', function(event) {
-          console.log('URL changed due to history navigation:', window.location.href);
-          console.log('State data:', event.state); 
-          console.log('callbacks', paymentCallbackURL, authTransactionCallbackURL, appDeepLink);
-        });
+        setInterval(() => {
+          if (window.location.href !== lastUrl) {
+            lastUrl = location.href;
+            console.log('URL changed to:', lastUrl);
+            if (lastUrl.includes(paymentCallbackURL) || lastUrl.includes(authTransactionCallbackURL)) {
+              window.location.href = appDeepLink;
+            }
+          }
+        }, 500);
         
         if (!publicKey || !secretKey) {
           return;
