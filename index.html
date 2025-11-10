@@ -88,16 +88,17 @@
         }, {});
       }
 
-       function decryptToken(encrypted) {
+      // On the web:
+      function decryptToken(encrypted) {
         try {
-          const bytes = CryptoJS.AES.decrypt(decodeURIComponent(encrypted), ENCRYPTION_KEY);
+          const bytes = CryptoJS.AES.decrypt(encrypted, ENCRYPTION_KEY);
           return bytes.toString(CryptoJS.enc.Utf8);
         } catch (e) {
-          console.error('❌ Failed to decrypt token', e);
+          alert('❌ Failed to decrypt token', e);
           return null;
         }
       }
-
+      
       // 🧠 Helper: get a config value from cookies, window, or query params
       function getConfigValue(key, defaultValue = null) {
         const cookies = parseCookies();
